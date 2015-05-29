@@ -43,7 +43,7 @@ void draw(){
   
 void mousePressed() {
   loop();  // Holding down the mouse activates looping
-  saveFrame("newHarmony1936-######.png");
+  //saveFrame("glassFacade1940-######.png");
 }
 
 void mouseReleased() {
@@ -209,12 +209,16 @@ void flagLongRect(int x, int y){
 void triangleComb(int x, int y,int x2, int y2){
   fill(cArray[4]);
   triangle(pointMapX[x][y],pointMapY[x][y],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2]);
+  pepperSlope(cArray[4],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],true);
   fill(cArray[1]);
   triangle(pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x+2][y+2],pointMapY[x+2][y+2],pointMapX[x][y+2],pointMapY[x][y+2]);
+  pepperSlope(cArray[1],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],true);
   fill(cArray[6]);
   triangle(pointMapX[x2][y2],pointMapY[x2][y2],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
+  pepperSlope(cArray[6],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],false);
   fill(cArray[1]);
   triangle(pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2+2][y2+3],pointMapY[x2+2][y2+3],pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
+  pepperSlope(cArray[1],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],true);
   flagBigRect(x,y);
   flagLongRect(x2,y2);
 }  
@@ -222,7 +226,7 @@ void triangleComb(int x, int y,int x2, int y2){
 void oneComb(int x, int y){
   fill(cArray[6]);
   triangle(pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y],pointMapY[x+1][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1]);
-  pepperSlope(cArray[0],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],false);
+  pepperSlope(cArray[6],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],false);
   fill(cArray[1]);
   beginShape();
      vertex(pointMapX[x][y],pointMapY[x][y]);
@@ -231,7 +235,8 @@ void oneComb(int x, int y){
      vertex(pointMapX[x][y+2],pointMapY[x][y+2]);
      vertex(pointMapX[x][y],pointMapY[x][y]);
   endShape();
-  
+  pepperSlope(cArray[1],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],true);  
+  pepperNoise(cArray[1],pointMapX[x][y+1],pointMapY[x][y+1],smallRectwidth,smallRectwidth);
   flagBigRect(x,y);
 }
 
@@ -377,20 +382,19 @@ void pepperbg(){
   stroke(0,0,0);
 }
 
-void pepperSlope(color iniColor, float x0, float y0, float x1, float y1, boolean isTop){
+void pepperSlope(color iniColor, float x0, float y0, float x1, float y1, boolean isDown){
   float x, y;
-  for(int i=0; i<100; i++){
-  //stroke(colorChangeHSB(iniColor,5,5,5));
-  stroke(0,0,0);
-  strokeWeight(10);
-  x = random(x0,x1);
-  y = random(y0,y1);
-  if(isTop==true){ 
-    if(y>slopeCal(x,x0,y0,x1,y1))
+  for(int i=0; i<500; i++){
+  stroke(colorChangeHSB(iniColor,5,5,5));
+  strokeWeight(2);
+  x = random(x0+2*segX,x1-2*segY);
+  y = random(y0+2*segX,y1-2*segY);
+  if(isDown==true){ 
+    if(y>slopeCal(x,x0,y0,x1,y1)+segX)
     {point(x,y);}
   }  
   else{
-    if(y<slopeCal(x,x0,y0,x1,y1))
+    if(y<slopeCal(x,x0,y0,x1,y1)-segX)
     {point(x,y);}
   } 
   }
