@@ -348,8 +348,8 @@ void arcEdgeBackground(){
 void arcEdgeForeground(){
   fill(cArray[1]);
   triangle((pointMapX[20][1]+pointMapX[21][1])*0.5,(pointMapY[21][0]+pointMapY[21][1])*0.5,(pointMapX[20][1]+pointMapX[21][1])*0.5+smallRectwidth,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4]);
-  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*0.7,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],1);
-  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*1.2,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],2);
+  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*0.8,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],1);
+  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*1.3,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],2);
 }
 color colorChangeHSB(color iniColor,float segH,float segS,float segB){
   float h,s,b,h1,s1,b1;
