@@ -27,7 +27,7 @@ void draw(){
   noFill();    
   iniFlag();
   //drawPoint();
-  arcEdge();
+  arcEdgeBackground();
   drawSmallRect();
   triangleComb(6,3,19,5);  
   oneComb(5,1);
@@ -35,9 +35,8 @@ void draw(){
   drawBigRect();  
   drawMidHRect();
   drawMidVRect();
-  fill(cArray[1]);
-  triangle((pointMapX[20][1]+pointMapX[21][1])*0.5,(pointMapY[21][0]+pointMapY[21][1])*0.5,(pointMapX[20][1]+pointMapX[21][1])*0.5+smallRectwidth,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4]);
-  //drawBgNoise(7);
+  arcEdgeForeground();
+   //drawForeGroundNoise(7);
   //noStroke();
 }
   
@@ -209,16 +208,16 @@ void flagLongRect(int x, int y){
 void triangleComb(int x, int y,int x2, int y2){
   fill(cArray[4]);
   triangle(pointMapX[x][y],pointMapY[x][y],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2]);
-  pepperSlope(cArray[4],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],true);
+  pepperSlope(cArray[4],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],2);
   fill(cArray[1]);
   triangle(pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x+2][y+2],pointMapY[x+2][y+2],pointMapX[x][y+2],pointMapY[x][y+2]);
-  pepperSlope(cArray[1],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],true);
+  pepperSlope(cArray[1],pointMapX[x+2][y],pointMapY[x+2][y],pointMapX[x][y+2],pointMapY[x][y+2],4);
   fill(cArray[6]);
   triangle(pointMapX[x2][y2],pointMapY[x2][y2],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
-  pepperSlope(cArray[6],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],false);
+  pepperSlope(cArray[6],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],2);
   fill(cArray[1]);
   triangle(pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2+2][y2+3],pointMapY[x2+2][y2+3],pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
-  pepperSlope(cArray[1],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],true);
+  pepperSlope(cArray[1],pointMapX[x2+2][y2],pointMapY[x2+2][y2],pointMapX[x2][y2+3],pointMapY[x2][y2+3],4);
   flagBigRect(x,y);
   flagLongRect(x2,y2);
 }  
@@ -226,7 +225,7 @@ void triangleComb(int x, int y,int x2, int y2){
 void oneComb(int x, int y){
   fill(cArray[6]);
   triangle(pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y],pointMapY[x+1][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1]);
-  pepperSlope(cArray[6],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],false);
+  pepperSlope(cArray[6],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],1);
   fill(cArray[1]);
   beginShape();
      vertex(pointMapX[x][y],pointMapY[x][y]);
@@ -235,7 +234,7 @@ void oneComb(int x, int y){
      vertex(pointMapX[x][y+2],pointMapY[x][y+2]);
      vertex(pointMapX[x][y],pointMapY[x][y]);
   endShape();
-  pepperSlope(cArray[1],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],true);  
+  pepperSlope(cArray[1],pointMapX[x][y],pointMapY[x][y],pointMapX[x+1][y+1],pointMapY[x+1][y+1],3);  
   pepperNoise(cArray[1],pointMapX[x][y+1],pointMapY[x][y+1],smallRectwidth,smallRectwidth);
   flagBigRect(x,y);
 }
@@ -249,8 +248,11 @@ void ladderComb(int x0, int y0, int x1, int y1, int x2,int y2,int x3, int y3){
      vertex(pointMapX[x0][y0+1],pointMapY[x0][y0+1]);
      vertex(pointMapX[x0][y0],pointMapY[x0][y0]);
   endShape();
+  pepperNoise(cArray[6],pointMapX[x0][y0],pointMapY[x0][y0],smallRectwidth*2,smallRectwidth);
+  pepperSlope(cArray[6],pointMapX[x0][y0+1],pointMapY[x0][y0+1],pointMapX[x0+2][y0+3],pointMapY[x0+2][y0+3],1);
   fill(cArray[1]);
   triangle(pointMapX[x0][y0+1],pointMapY[x0][y0+1],pointMapX[x0+2][y0+3],pointMapY[x0+2][y0+3],pointMapX[x0][y0+3],pointMapY[x0][y0+3]);
+  pepperSlope(cArray[1],pointMapX[x0][y0+1],pointMapY[x0][y0+1],pointMapX[x0+2][y0+3],pointMapY[x0+2][y0+3],3);
   
   fill(cArray[6]);
   beginShape();
@@ -260,8 +262,11 @@ void ladderComb(int x0, int y0, int x1, int y1, int x2,int y2,int x3, int y3){
      vertex(pointMapX[x1][y1+1],pointMapY[x1][y1+1]);
      vertex(pointMapX[x1][y1],pointMapY[x1][y1]);
   endShape();
+  pepperNoise(cArray[6],pointMapX[x1][y1],pointMapY[x1][y1],smallRectwidth*2,smallRectwidth);
+  pepperSlope(cArray[6],pointMapX[x1][y1+1],pointMapY[x1][y1+1],pointMapX[x1+2][y0+3],pointMapY[x1+2][y1+3],1);
   fill(cArray[1]);
   triangle(pointMapX[x1][y1+1],pointMapY[x1][y1+1],pointMapX[x1+2][y1+3],pointMapY[x1+2][y1+3],pointMapX[x1][y1+3],pointMapY[x1][y1+3]);
+  pepperSlope(cArray[1],pointMapX[x1][y1+1],pointMapY[x1][y1+1],pointMapX[x1+2][y1+3],pointMapY[x1+2][y1+3],3);
   
   fill(cArray[4]);
   beginShape();
@@ -271,9 +276,12 @@ void ladderComb(int x0, int y0, int x1, int y1, int x2,int y2,int x3, int y3){
      vertex(pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
      vertex(pointMapX[x2][y2],pointMapY[x2][y2]);
   endShape();
+  pepperNoise(cArray[4],pointMapX[x2][y2],pointMapY[x2][y2],smallRectwidth*2,smallRectwidth);
+  pepperSlope(cArray[4],pointMapX[x2+2][y2+1],pointMapY[x2+2][y2+1],pointMapX[x2][y2+3],pointMapY[x2][y2+3],2);  
   fill(cArray[1]);
   triangle(pointMapX[x2+2][y2+1],pointMapY[x2+2][y2+1],pointMapX[x2+2][y2+3],pointMapY[x2+2][y2+3],pointMapX[x2][y2+3],pointMapY[x2][y2+3]);
-
+  pepperSlope(cArray[1],pointMapX[x2+2][y2+1],pointMapY[x2+2][y2+1],pointMapX[x2][y2+3],pointMapY[x2][y2+3],4);    
+  
   fill(cArray[4]);
   beginShape();
      vertex(pointMapX[x3][y3],pointMapY[x3][y3]);
@@ -282,16 +290,19 @@ void ladderComb(int x0, int y0, int x1, int y1, int x2,int y2,int x3, int y3){
      vertex(pointMapX[x3][y3+1],pointMapY[x3][y3+1]);
      vertex(pointMapX[x3][y3],pointMapY[x3][y3]);
   endShape();
+  pepperNoise(cArray[4],pointMapX[x3][y3],pointMapY[x3][y3],smallRectwidth*2,smallRectwidth);
+  pepperSlope(cArray[4],pointMapX[x3][y3+1],pointMapY[x3][y3+1],pointMapX[x3+2][y3+3],pointMapY[x3+2][y3+3],1);
   fill(cArray[1]);
   triangle(pointMapX[x3][y3+1],pointMapY[x3][y3+1],pointMapX[x3+2][y3+3],pointMapY[x3+2][y3+3],pointMapX[x3][y3+3],pointMapY[x3][y3+3]);
-
+  pepperSlope(cArray[1],pointMapX[x3][y3+1],pointMapY[x3][y3+1],pointMapX[x3+2][y3+3],pointMapY[x3+2][y3+3],3);
+ 
   flagLongRect(x0,y0);
   flagLongRect(x1,y1);
   flagLongRect(x2,y2);
   flagLongRect(x3,y3);
 }
 
-void arcEdge(){
+void arcEdgeBackground(){
   fill(cArray[1]);
   strokeWeight(3);
   
@@ -302,6 +313,7 @@ void arcEdge(){
     vertex(pointMapX[0][14],pointMapY[0][14]);
     quadraticVertex(pointMapX[0][10],pointMapY[0][10],pointMapX[1][6],pointMapY[1][6]);
   endShape();
+  pepperSlope(cArray[1],pointMapX[1][6],pointMapY[1][6],pointMapX[0][14],pointMapY[0][14],4);
   
   //top-left
   beginShape();
@@ -310,6 +322,8 @@ void arcEdge(){
     quadraticVertex(pointMapX[3][0],pointMapY[3][0],pointMapX[4][0],pointMapY[4][0]);
     quadraticVertex(pointMapX[5][0],pointMapY[5][0],pointMapX[6][1],pointMapY[6][1]);
   endShape();
+  pepperNoise(cArray[1],pointMapX[2][0],pointMapY[2][0],smallRectwidth*2,smallRectwidth);
+  pepperSlope(cArray[1],pointMapX[4][0],pointMapY[4][0],pointMapX[6][1],pointMapY[6][1],3);
   
   //top-right long
   beginShape();
@@ -318,6 +332,7 @@ void arcEdge(){
     quadraticVertex(pointMapX[21][1],pointMapY[21][1],pointMapX[20][0],pointMapY[20][0]);
     quadraticVertex(pointMapX[15][0],pointMapY[15][0],pointMapX[8][1],pointMapY[8][1]);
   endShape();
+  pepperSlope(cArray[1],pointMapX[20][0],pointMapY[20][0],pointMapX[8][1],pointMapY[8][1],4);
   
   //right-bottom
   beginShape();
@@ -327,8 +342,15 @@ void arcEdge(){
     quadraticVertex(pointMapX[21][14]+smallRectwidth,pointMapY[21][14],pointMapX[21][13]+smallRectwidth,pointMapY[21][13]);
     quadraticVertex(pointMapX[21][10]+smallRectwidth,pointMapY[21][10],pointMapX[21][4],pointMapY[21][4]);     
   endShape();
+  pepperSlope(cArray[1],pointMapX[21][4],pointMapY[21][4],pointMapX[21][15]+smallRectwidth,pointMapY[21][15],3);
 }
 
+void arcEdgeForeground(){
+  fill(cArray[1]);
+  triangle((pointMapX[20][1]+pointMapX[21][1])*0.5,(pointMapY[21][0]+pointMapY[21][1])*0.5,(pointMapX[20][1]+pointMapX[21][1])*0.5+smallRectwidth,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4]);
+  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*0.7,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],1);
+  pepperSlope(cArray[1],pointMapX[20][1]+smallRectwidth*1.2,(pointMapY[21][0]+pointMapY[21][1])*0.5,pointMapX[21][4],pointMapY[21][4],2);
+}
 color colorChangeHSB(color iniColor,float segH,float segS,float segB){
   float h,s,b,h1,s1,b1;
   h=hue(iniColor);
@@ -341,7 +363,7 @@ color colorChangeHSB(color iniColor,float segH,float segS,float segB){
   return color(h1,s1,b1);  
 }
 
-void drawBgNoise(int transparency)
+void drawForeGroundNoise(int transparency)
 {
   float xnoise = 0.0;
   float ynoise = 0.0;
@@ -382,27 +404,43 @@ void pepperbg(){
   stroke(0,0,0);
 }
 
-void pepperSlope(color iniColor, float x0, float y0, float x1, float y1, boolean isDown){
-  float x, y;
+void pepperSlope(color iniColor, float x0, float y0, float x1, float y1, int quadrant){
+  float x=0;
+  float y=0;
   for(int i=0; i<500; i++){
+  stroke(0,0,0);
   stroke(colorChangeHSB(iniColor,5,5,5));
-  strokeWeight(2);
-  x = random(x0+2*segX,x1-2*segY);
-  y = random(y0+2*segX,y1-2*segY);
-  if(isDown==true){ 
-    if(y>slopeCal(x,x0,y0,x1,y1)+segX)
+  //strokeWeight(2);
+  if(x0<x1)
+  {x = random(x0+2*segX,x1-2*segY);}
+  if(x0>x1)
+  {x = random(x1+2*segX,x0-2*segY);}
+  if(y0<y1)
+  {y = random(y0+2*segX,y1-3*segY);}
+  if(y0>y1)
+  {y = random(y1+2*segX,y0-3*segY);}
+  if(quadrant==1){ 
+    if(y<slopeCaly(x,x0,y0,x1,y1)-segX)
     {point(x,y);}
   }  
-  else{
-    if(y<slopeCal(x,x0,y0,x1,y1)-segX)
-    {point(x,y);}
+  if(quadrant==2){
+    if(y<slopeCaly(x,x0,y0,x1,y1)-segX)
+    {point(x,y);}     
   } 
+  if(quadrant==3){
+    if(y>slopeCaly(x,x0,y0,x1,y1)+2*segX)
+    {point(x,y);}     
+  }
+  if(quadrant==4){
+    if(y>slopeCaly(x,x0,y0,x1,y1)+2*segX)
+    {point(x,y);}     
+  }
   }
   strokeWeight(3);
   stroke(0,0,0);
 }   
     
-float slopeCal(float x, float x0, float y0, float x1, float y1) {
+float slopeCaly(float x, float x0, float y0, float x1, float y1) {
   float y;
   y = (y0-y1)/(x0-x1)*(x-x1)+y1;
   return y;
